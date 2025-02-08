@@ -1,0 +1,59 @@
+#include <iostream>
+#include <cctype>
+#include <string>
+
+using namespace std;
+
+
+  bool tieneNumero(const string &contrasena){
+    for(char c : contrasena){
+  		      if(isdigit(c)){
+            
+			return true;
+        }
+    }
+    return false;
+}
+
+bool tieneMayuscula(const string &contrasena){
+    for (char c : contrasena){
+    		    if(isupper(c)){
+    		    	
+    		    	
+            return true;
+        }
+    }
+    return false;
+}
+
+int main(){
+    string contrasena;
+    bool esValida =false;
+    
+    do{
+        cout<<"Ingrese una contraseña: ";
+        cin>>contrasena;
+        
+        if(contrasena.length() < 8){
+            cout <<"La contraseña debe tener al menos 8 caracteres."<<endl;
+            continue;
+        }
+        
+        if(!tieneNumero(contrasena)){
+            cout<<"La contraseña debe contener al menos un numero."<<endl;
+            continue;
+        }
+        
+        if(!tieneMayuscula(contrasena)) {
+            cout<<"La contraseña debe contener al menos una letra mayuscula."<<endl;
+            continue;
+        }
+        
+        esValida=true;
+    } 
+	
+	while(!esValida);
+    
+    					cout<<"Contraseña válida." << endl;
+    return 0;
+}
