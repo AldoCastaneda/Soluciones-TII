@@ -1,0 +1,39 @@
+#include <iostream>
+
+
+
+using namespace std;
+
+int main() {
+    int numEstudiantes;
+    float promedioGeneral=0;
+
+    //solicita el numero de estudiantes
+    cout<<"Ingrese el numero de estudiantes: ";
+    cin>>numEstudiantes;
+
+    //declara el arreglo para almacenar las calificaciones
+    float calificaciones[numEstudiantes];
+
+    
+    //solicita las calificaciones de cada estudiante
+    for ( int i=0;i<numEstudiantes;i++){
+        cout<<"Ingrese la calificacion del estudiante "<<i+1<<": ";
+        cin>>calificaciones[i];
+    }
+
+
+    //calcula el promedio de cada estudiante y el promedio general
+    for (int i=0;i<numEstudiantes;i++){
+        promedioGeneral+=calificaciones[i]; //realiza memoria acumulada
+        cout<<"Promedio del estudiante "<<i+1<<": "<<calificaciones[i]<<endl;
+    }
+
+
+    //calcula el promedio general
+    promedioGeneral/=numEstudiantes;
+    cout<<"Promedio general de todas las calificaciones: "<<promedioGeneral<<endl;
+
+
+    return 0;
+}
