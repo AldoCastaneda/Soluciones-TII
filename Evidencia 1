@@ -1,0 +1,101 @@
+#include <iostream>
+
+using namespace std;
+
+const int NUM_PRODUCTOS = 10; // tamaño del inventario
+
+//arreglos para almacenar la informacion de los productos
+int codigos[NUM_PRODUCTOS] = {101, 102, 103, 104, 105, 106, 107, 108, 109, 110};
+float preciosProductos[NUM_PRODUCTOS] = {50.0, 30.5, 100.0, 25.0, 10.0, 75.5, 200.0, 90.0, 60.0, 15.0};
+int stockProductos[NUM_PRODUCTOS] = {10, 5, 20, 8, 15, 3, 7, 12, 9, 11};
+
+float totalVentas = 0.0; // acumula el total de las ventas realizadas
+
+//funcion para mostrar la lista de precios en formato tabular
+void mostrarListaPrecios() {
+    cout << "\nCodigo   Precio   Stock\n";
+    for (int i = 0; i < NUM_PRODUCTOS; i++)
+        cout << codigos[i] << "    $" << preciosProductos[i] << "     " << stockProductos[i] << endl;
+}
+
+// funcion para cambiar el precio de un producto dado su codigo
+void modificarPrecio() {
+    int codigoIngresado;
+    float nuevoPrecio;
+    cout << "\nCodigo del producto: ";
+    cin >> codigoIngresado;
+
+    for (int i = 0; i < NUM_PRODUCTOS; i++) {
+        if (codigos[i] == codigoIngresado) { // buscar el producto en el arreglo
+            cout << "Nuevo precio: ";
+            cin >> nuevoPrecio;
+            preciosProductos[i] = nuevoPrecio; //actualizar el precio en la posicion encontrada
+            return;
+        }
+    }
+    cout << "Codigo no encontrado.\n";
+}
+
+//funcion para registrar una venta, actualizando el inventario y sumando el total vendido
+void procesarVenta() {
+    int codigoIngresado, cantidadVendida;
+    float totalVentaActual = 0.0;
+    cout << "\nIngrese codigo del producto (0 para salir): ";
+
+    while (cin >> codigoIngresado && codigoIngresado != 0) { //repite hasta que el usuario ingrese 0
+        for (int i = 0; i < NUM_PRODUCTOS; i++) {
+            if (codigos[i] == codigoIngresado) { //buscar el producto en el arreglo
+                cout << "Cantidad a vender: ";
+                cin >> cantidadVendida;
+                
+                if (cantidadVendida <= stockProductos[i]) { //verifica si hay suficiente stock
+                    stockProductos[i] -= cantidadVendida; //resta la cantidad vendida del inventario
+                    totalVentaActual += cantidadVendida * preciosProductos[i]; // calcula el total de la venta
+                } else {
+                    cout << "Stock insuficiente.\n";
+                }
+            }
+        }
+        cout << "Ingrese otro codigo (0 para salir): ";
+    }
+
+    cout << "Total de venta: $" << totalVentaActual << endl;
+    totalVentas += totalVentaActual; //acumula el total vendido
+}
+
+// Funcion para mostrar el total de dinero acumulado en ventas
+void mostrarTotalVentas() {
+    cout << "\nTotal vendido: $" << totalVentas << endl;
+}
+
+//funcion para calcular y mostrar el valor total del inventario
+void calcularValorInventario() {
+    float totalInventario = 0.0;
+    for (int i = 0; i < NUM_PRODUCTOS; i++)
+        totalInventario += stockProductos[i] * preciosProductos[i]; // Multiplica la existencia por el precio y suma al total
+    cout << "\nValor total del inventario: $" << totalInventario << endl;
+}
+
+//funcion principal que muestra el menu y llama a las funciones correspondientes
+int main() {
+    int opcion;
+
+    do {
+        //menu de opciones
+        cout << "\n1. Mostrar precios\n2. Modificar precio\n3. Registrar venta\n4. Total vendido\n5. Inventario\n6. Salir\nOpcion: ";
+        cin >> opcion;
+
+        // ejecuta la opcion seleccionada
+        switch (opcion) {
+            case 1: mostrarListaPrecios(); break;
+            case 2: modificarPrecio(); break;
+            case 3: procesarVenta(); break;
+            case 4: mostrarTotalVentas(); break;
+            case 5: calcularValorInventario(); break;
+            case 6: cout << "Saliendo...\n"; break;
+            default: cout << "Opcion no valida.\n";
+        }
+    } while (opcion != 6); // Repite hasta que el usuario elija salir
+
+    return 0;
+}
